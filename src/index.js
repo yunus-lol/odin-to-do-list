@@ -1,6 +1,6 @@
 import "./styles.css";
-import { greeting } from "./script.js";
-import  loadSidebar from "./sidebar.js";
+import loadSidebar from "./sidebar.js";
+import createProject from "./modal.js";
 
-console.log(greeting);
-loadSidebar()
+loadSidebar();
+createProject();

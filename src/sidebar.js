@@ -6,19 +6,19 @@ export default function() {
   heading.textContent = "TO-DO";
 
   const home = document.createElement("button");
-  home.classList.add(".sidebar-home");
+  home.classList.add("sidebar-home");
   home.textContent = "Home";
 
   const todo = document.createElement("button");
-  todo.classList.add(".sidebar-todo");
+  todo.classList.add("sidebar-todo");
   todo.textContent = "To do";
 
   const projects = document.createElement("button");
-  projects.classList.add(".sidebar-projects");
+  projects.classList.add("sidebar-projects");
   projects.textContent = "Projects";
 
   const addProject = document.createElement("button");
-  addProject.classList.add(".sidebar-addProject");
+  addProject.classList.add("sidebar-addProject");
   addProject.textContent = "+ Add Project";
 
   sidebar.appendChild(heading);
