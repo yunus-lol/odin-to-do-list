@@ -12,10 +12,14 @@
   background-color: rgb(40, 40, 40);
   color: white;
   font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
 }
 
 .header {
   grid-area: 1 / 2 / 2 / 3;
+  font-weight: bold;
+  font-size: 1.8em;
+  padding: 1.2em 1em;
 }
 
 .sidebar {
@@ -26,20 +30,18 @@
 }
 
 .sidebar-heading {
-  display: flex;
+  display: grid;
+  grid-area: 1 / 1;
   justify-content: center;
   align-items: center;
   padding: 1em;
-}
-
-.container > * {
-  border: 1px solid black;
 }
 
 button {
   background-color: rgb(30, 30, 30);
   border: none;
   margin: 0.5em;
+  padding: 1em  ;
   color: white;
   border-radius: 8px;
   cursor: pointer;
@@ -49,6 +51,44 @@ button:hover {
   background-color: rgb(35, 35, 35);
 }
 
-.modal {
-  padding: 2em;
+.addProject {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-area: 2 / 1;
+}
+
+.projects-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.addProjectModal {
+  background-color: rgb(56, 56, 56);
+  padding: 1em;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  align-self: center;
+  justify-self: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1em;
+  width: 30vw;
+}
+
+form > * {
+  margin: 0.5em;
+}
+
+#name {
+  padding: 0.5em
+}
+
+input:focus {
+  outline: none;
 }

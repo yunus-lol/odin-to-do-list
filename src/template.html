@@ -7,11 +7,21 @@
 </head>
 <body>
   <div class="container">
-    <div class="header">header</div>
-    <div class="sidebar"></div>
-    <div class="main">main
-      <dialog class="modal"></dialog>
+    <div class="header">Today</div>
+    <div class="sidebar">
+      <h1 class="sidebar-heading">TO-DO</h1>
+      <button class="addProject">+ Add Project</button>
+      <dialog class="addProjectModal">
+        <form>
+          <label for="name">Add a new Project: </label>
+          <input type="text" id="name" name="name" placeholder="Project Title">
+          <button type="submit" class="modal-submit">Add Project</button>
+          <div class="error"></div>
+        </form>
+      </dialog>
+      <div class="projects-section"></div>
     </div>
+    <div class="main"></div>
   </div>
 </body>
 </html>

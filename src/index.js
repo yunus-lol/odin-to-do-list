@@ -1,6 +1,4 @@
 import "./styles.css";
-import loadSidebar from "./sidebar.js";
-import createProject from "./modal.js";
+import { generateModalContent } from "./projects-modal.js";
 
-loadSidebar();
-createProject();
+generateModalContent();
