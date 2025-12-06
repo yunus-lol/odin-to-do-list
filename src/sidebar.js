@@ -1,3 +1,5 @@
+import bin from "./bin.png"
+
 const projectsSection = document.querySelector(".projects-section");
 let projectsArr = [];
 
@@ -14,13 +16,31 @@ export function addProjectToArray(name) {
 }
 
 function displayProjects() {
-  projectsSection.innerHTML = ""
+  projectsSection.innerHTML = "";
   projectsArr.forEach(project => {
+    const projectArea = document.createElement("div");
     const projectItem = document.createElement("button");
-    projectItem.classList.add("projectItem")
+    const image = document.createElement("img");
+
+    projectItem.classList.add("projectItem");
+    projectArea.classList.add("project-area");
+    image.classList.add("delete-icon");
+
     projectItem.textContent = project.name;
-    projectsSection.appendChild(projectItem);
+    image.src = bin;
+
+    image.addEventListener("click", () => {
+      projectsSection.removeChild(projectArea)
+      const index = projectsArr.indexOf(project)
+      projectsArr.splice(index, 1)
+    });
+
+    projectsSection.appendChild(projectArea)
+    projectArea.appendChild(projectItem);
+    projectArea.appendChild(image);
   })
+  console.log(projectsArr)  
 }
 
+addProjectToArray("Default");
 addProjectToArray("Default Project");
