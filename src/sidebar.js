@@ -1,7 +1,9 @@
-import bin from "./bin.png"
+import bin from "./bin.png";
+import { showProject } from "./to-dos";
+import { tasksArr } from "./to-dos";
 
 const projectsSection = document.querySelector(".projects-section");
-let projectsArr = [];
+export let projectsArr = [];
 
 class Project {
   constructor(name) {
@@ -12,7 +14,7 @@ class Project {
 export function addProjectToArray(name) {
   const project = new Project(name);
   projectsArr.push(project);
-  displayProjects()
+  displayProjects();
 }
 
 function displayProjects() {
@@ -29,17 +31,21 @@ function displayProjects() {
     projectItem.textContent = project.name;
     image.src = bin;
 
+    projectItem.addEventListener("click", () => {
+      const index = projectsArr.indexOf(project);
+      showProject(index)
+    });
+
     image.addEventListener("click", () => {
-      projectsSection.removeChild(projectArea)
-      const index = projectsArr.indexOf(project)
-      projectsArr.splice(index, 1)
+      projectsSection.removeChild(projectArea);
+      const index = projectsArr.indexOf(project);
+      projectsArr.splice(index, 1);
     });
 
     projectsSection.appendChild(projectArea)
     projectArea.appendChild(projectItem);
     projectArea.appendChild(image);
-  })
-  console.log(projectsArr)  
+  });
 }
 
 addProjectToArray("Default");

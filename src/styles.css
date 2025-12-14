@@ -15,7 +15,7 @@
   overflow: hidden;
 }
 
-.header {
+.title {
   grid-area: 1 / 2 / 2 / 3;
   font-weight: bold;
   font-size: 1.8em;
@@ -45,7 +45,7 @@ button {
   color: white;
   border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.4s;
 }
 
 button:hover {
@@ -69,7 +69,7 @@ button:hover {
   height: 5em;
 }
 
-.addProjectModal {
+.addProjectModal, .decline {
   background-color: rgb(56, 56, 56);
   padding: 1em;
   color: white;
@@ -116,4 +116,46 @@ input:focus {
   background-color: rgb(32, 32, 32);
   opacity: 0.4;
   cursor: pointer;
+}
+
+.decline-div {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+}
+
+.decline-close {
+  margin-top: 2em;
+}
+
+.task {
+  background-color: rgb(32, 32, 32);
+  margin: 1em;
+  padding: 1em 2em 2em 2em;
+  transition: background-color 0.5s ease-out, transform 0.5s ease-out;
+  border-radius: 10px;
+}
+
+.main-title {
+  margin-left: 1em;
+  font-weight: bold;
+  font-size: 1.15em;
+}
+
+.task-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;  
+}
+
+.task-row-two {
+  display: flex;
+}
+
+.task-priority {
+  margin-right: 1em;
+}
+
+.task:hover {
+  background-color: rgb(24, 24, 24);
 }

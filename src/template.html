@@ -7,7 +7,9 @@
 </head>
 <body>
   <div class="container">
-    <div class="header">Today</div>
+    <div class="header">
+      <div class="title">Today</div>
+    </div>
     <div class="sidebar">
       <h1 class="sidebar-heading">TO-DO</h1>
       <button class="addProject">+ Add Project</button>
@@ -19,9 +21,18 @@
           <div class="error"></div>
         </form>
       </dialog>
+      <dialog class="decline">
+        <div class="decline-div">
+          <h3 class="decline-title">You have hit the limit of 5 projects</h3>
+          <button class="decline-close">Close</button>
+        </div>
+      </dialog>
       <div class="projects-section"></div>
     </div>
-    <div class="main"></div>
+    <div class="main">
+      <div class="main-title"></div>
+      <div class="tasks-section"></div>
+    </div>
   </div>
 </body>
 </html>

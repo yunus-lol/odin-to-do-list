@@ -1,12 +1,22 @@
 import { addProjectToArray } from "./sidebar";
+import { projectsArr } from "./sidebar";
 
 const addProject = document.querySelector(".addProject");
 const modal = document.querySelector(".addProjectModal");
 const error = document.querySelector(".error");
+const decline = document.querySelector(".decline");
+const declineButton = document.querySelector(".decline-close")
 
 export function generateModalContent() {
   addProject.addEventListener("click", () => {
-    modal.showModal();
+    if (projectsArr.length === 5) {
+      decline.showModal();
+      declineButton.addEventListener("click", () => {
+        decline.close()
+      });
+    } else {
+      modal.showModal();
+    }
   });
 
   const submit = document.querySelector(".modal-submit")
