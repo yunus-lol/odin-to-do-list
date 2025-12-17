@@ -1,6 +1,5 @@
 import bin from "./bin.png";
 import { showProject } from "./to-dos";
-import { tasksArr } from "./to-dos";
 
 const projectsSection = document.querySelector(".projects-section");
 export let projectsArr = [];
@@ -31,14 +30,13 @@ function displayProjects() {
     projectItem.textContent = project.name;
     image.src = bin;
 
+    const index = projectsArr.indexOf(project);
     projectItem.addEventListener("click", () => {
-      const index = projectsArr.indexOf(project);
       showProject(index)
     });
 
     image.addEventListener("click", () => {
       projectsSection.removeChild(projectArea);
-      const index = projectsArr.indexOf(project);
       projectsArr.splice(index, 1);
     });
 

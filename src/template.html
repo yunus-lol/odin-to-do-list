@@ -30,6 +30,25 @@
       <div class="projects-section"></div>
     </div>
     <div class="main">
+      <dialog class="add-task-modal">
+        <form class="add-task-modal-form">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" placeholder="Task Title">
+          <label for="description">Description</label>
+          <textarea type="textarea" id="description" name="description" placeholder="Task Description" rows="6" maxlength="300"></textarea>
+          <label for="dueDate">Due</label>
+          <input type="date" id="dueDate" name="dueDate">
+          <label for="priority">Priority</label>
+          <select name="priority" id="priority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+          <button type="submit" class="task-submit">Add Task</button>
+          <button class="task-cancel">Cancel</button>
+          <div class="task-error"></div>
+        </form>
+      </dialog>
       <div class="main-title"></div>
       <div class="tasks-section"></div>
     </div>
