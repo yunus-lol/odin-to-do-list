@@ -17,24 +17,27 @@ class Task {
 
 function addTaskToArr(name, description, dueDate, priority, index) {
   const task = new Task(name, description, dueDate, priority);
-  tasksArr[index].push(task)
+  tasksArr[index].push(task);
 }
 
 export function showProject(index) {
-  const addTask = document.createElement("button");
   mainTitle.textContent = projectsArr[index].name;
-  addTask.textContent = "+"
-  addTask.classList.add("add-task")
-  mainTitle.appendChild(addTask)
-  createTask(index)
+
+  const addTaskBtn = document.createElement("button");
+  addTaskBtn.textContent = "+";
+  addTaskBtn.classList.add("add-task");
+  mainTitle.appendChild(addTaskBtn);
+
+  addTask(index);
+  createTask(index);
 }
 
-function createTask(index) {
-  tasksSection.textContent = ""
+export function createTask(index) {
+  tasksSection.textContent = "";
+
   tasksArr[index].forEach(task => {
     const card = document.createElement("div");
-    card.classList.add("task")
-    card.textContent = ""
+    card.classList.add("task");
 
     card.innerHTML = `
       <div class="task-row">
@@ -48,33 +51,34 @@ function createTask(index) {
     `;
 
     const taskRow = card.querySelector(".task-row");
-    const deleteTask = document.createElement("img")
+    const deleteTask = document.createElement("img");
     deleteTask.src = bin;
-    deleteTask.classList.add("delete-task")
-    deleteTask.textContent = "Delete";
-
-    taskRow.appendChild(deleteTask)
-    tasksSection.appendChild(card)
-
-    addTask(index)
+    deleteTask.classList.add("delete-task");
 
     deleteTask.addEventListener("click", () => {
-      tasksSection.removeChild(card)
       const taskIndex = tasksArr[index].indexOf(task);
-      tasksArr[index].splice(taskIndex, 1)
+      tasksArr[index].splice(taskIndex, 1);
+      createTask(index);
     });
+
+    taskRow.appendChild(deleteTask);
+    tasksSection.appendChild(card);
   });
 }
 
 export function addTask(index) {
-  const addTaskButton = document.querySelector(".add-task")
-  const addTaskModal = document.querySelector(".add-task-modal")
+  const addTaskButton = document.querySelector(".add-task");
+  const addTaskModal = document.querySelector(".add-task-modal");
   const submitTask = document.querySelector(".task-submit");
   const cancelTask = document.querySelector(".task-cancel");
-  const error = document.querySelector(".task-error");
 
   addTaskButton.addEventListener("click", () => {
     addTaskModal.showModal();
+  });
+
+  cancelTask.addEventListener("click", (event) => {
+    event.preventDefault()
+    addTaskModal.close()
   });
 
   submitTask.addEventListener("click", (event) => {
@@ -85,13 +89,12 @@ export function addTask(index) {
     const dueDate = document.querySelector("#dueDate").value;
     const priority = document.querySelector("#priority").value;
 
-    addTaskToArr(name, description, dueDate, priority, index)
-    addTaskModal.close()
-    createTask(index)
-    console.log(tasksArr)
+    addTaskToArr(name, description, dueDate, priority, index);
+    addTaskModal.close();
+    createTask(index);
   });
 }
 
-addTaskToArr("This is a magnificent title", "This is a description that I am filling with empty space", "6/7/67", "High", 0)
-addTaskToArr("goodbye", "goodbye", "goodbye", "goodbye", 0)
-addTaskToArr("goodbye", "goodbye", "goodbye", "goodbye", 1)
+addTaskToArr("This is a magnificent title", "This is a description that I am filling with empty space", "6/7/67", "High", 0);
+addTaskToArr("goodbye", "goodbye", "goodbye", "goodbye", 0);
+addTaskToArr("goodbye", "goodbye", "goodbye", "goodbye", 1);

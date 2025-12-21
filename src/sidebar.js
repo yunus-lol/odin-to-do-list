@@ -36,8 +36,8 @@ function displayProjects() {
     });
 
     image.addEventListener("click", () => {
-      projectsSection.removeChild(projectArea);
       projectsArr.splice(index, 1);
+      displayProjects()
     });
 
     projectsSection.appendChild(projectArea)
