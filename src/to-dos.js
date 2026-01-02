@@ -2,9 +2,14 @@ import { projectsArr } from "./sidebar";
 import bin from "./bin.png";
 
 export let tasksArr = [[], [], [], [], []];
+let currentProjectIndex = 0;
 
 const mainTitle = document.querySelector(".main-title");
 const tasksSection = document.querySelector(".tasks-section");
+
+const addTaskBtn = document.createElement("button");
+addTaskBtn.textContent = "+";
+addTaskBtn.classList.add("add-task");
 
 class Task {
   constructor(name, description, dueDate, priority) {
@@ -21,14 +26,12 @@ function addTaskToArr(name, description, dueDate, priority, index) {
 }
 
 export function showProject(index) {
-  mainTitle.textContent = projectsArr[index].name;
+  currentProjectIndex = index;
 
-  const addTaskBtn = document.createElement("button");
-  addTaskBtn.textContent = "+";
-  addTaskBtn.classList.add("add-task");
+  mainTitle.textContent = "";
+  mainTitle.textContent = projectsArr[index].name;
   mainTitle.appendChild(addTaskBtn);
 
-  addTask(index);
   createTask(index);
 }
 
@@ -66,34 +69,32 @@ export function createTask(index) {
   });
 }
 
-export function addTask(index) {
-  const addTaskButton = document.querySelector(".add-task");
-  const addTaskModal = document.querySelector(".add-task-modal");
-  const submitTask = document.querySelector(".task-submit");
-  const cancelTask = document.querySelector(".task-cancel");
+const addTaskModal = document.querySelector(".add-task-modal");
+const submitTask = document.querySelector(".task-submit");
+const cancelTask = document.querySelector(".task-cancel");
 
-  addTaskButton.addEventListener("click", () => {
-    addTaskModal.showModal();
-  });
+addTaskBtn.addEventListener("click", () => {
+  addTaskModal.showModal();
+});
 
-  cancelTask.addEventListener("click", (event) => {
-    event.preventDefault()
-    addTaskModal.close()
-  });
+cancelTask.addEventListener("click", (event) => {
+  event.preventDefault()
+  addTaskModal.close()
+});
 
-  submitTask.addEventListener("click", (event) => {
-    event.preventDefault();
+submitTask.addEventListener("click", (event) => {
+  event.preventDefault();
 
-    const name = document.querySelector("#title").value;
-    const description = document.querySelector("#description").value;
-    const dueDate = document.querySelector("#dueDate").value;
-    const priority = document.querySelector("#priority").value;
+  const name = document.querySelector("#title").value;
+  const description = document.querySelector("#description").value;
+  const dueDate = document.querySelector("#dueDate").value;
+  const priority = document.querySelector("#priority").value;
 
-    addTaskToArr(name, description, dueDate, priority, index);
-    addTaskModal.close();
-    createTask(index);
-  });
-}
+  addTaskToArr(name, description, dueDate, priority, currentProjectIndex);
+  addTaskModal.close();
+  createTask(currentProjectIndex);
+});
+
 
 addTaskToArr("This is a magnificent title", "This is a description that I am filling with empty space", "6/7/67", "High", 0);
 addTaskToArr("goodbye", "goodbye", "goodbye", "goodbye", 0);
