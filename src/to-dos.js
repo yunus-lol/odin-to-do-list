@@ -36,6 +36,10 @@ function saveProjects() {
   localStorage.setItem("tasksObj", JSON.stringify(tasksArr));
 }
 
+function hasAnyTasks() {
+  return tasksArr.some(task => task.length > 0);
+}
+
 function addTaskToArr(name, description, dueDate, priority, index) {
   if (!tasksArr[index]) {
     tasksArr[index] = [];
@@ -184,7 +188,7 @@ editTaskCancel.addEventListener("click", (event) => {
 
 loadProjects();
 
-if (tasksArr.length === 0) {
+if (!hasAnyTasks()) {
   addTaskToArr("This is a magnificent title", "This is a description that I am filling with empty space", "2067-07-06", "High", 0);
   addTaskToArr("This is a glorious title", "hello this is empty space lol", "2026-05-02", "Low", 0);
   addTaskToArr("This is once again empty space", "imagine reading this would never be me 💀💀💀", "2026-11-23", "goodbye", 1);
