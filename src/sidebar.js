@@ -10,9 +10,23 @@ class Project {
   }
 }
 
+function loadProjects() {
+  const stored = localStorage.getItem("projectsObj");
+  if (stored) {
+    projectsArr = JSON.parse(stored);
+  } else {
+    projectsArr = [];
+  }
+}
+
+function saveProjects() {
+  localStorage.setItem("projectsObj", JSON.stringify(projectsArr));
+}
+
 export function addProjectToArray(name) {
   const project = new Project(name);
   projectsArr.push(project);
+  saveProjects();
   displayProjects();
 }
 
@@ -37,7 +51,8 @@ function displayProjects() {
 
     image.addEventListener("click", () => {
       projectsArr.splice(index, 1);
-      displayProjects()
+      saveProjects();
+      displayProjects();
     });
 
     projectsSection.appendChild(projectArea)
@@ -46,5 +61,11 @@ function displayProjects() {
   });
 }
 
-addProjectToArray("Default");
-addProjectToArray("Default Project");
+loadProjects();
+
+if (projectsArr.length === 0) {
+  addProjectToArray("Default");
+  addProjectToArray("Default Project");
+} else {
+  displayProjects();
+}

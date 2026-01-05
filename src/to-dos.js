@@ -22,9 +22,23 @@ class Task {
   }
 }
 
+function loadProjects() {
+  const stored = localStorage.getItem("tasksObj");
+  if (stored) {
+    tasksArr = JSON.parse(stored);
+  } else {
+    tasksArr = [];
+  }
+}
+
+function saveProjects() {
+  localStorage.setItem("tasksObj", JSON.stringify(tasksArr));
+}
+
 function addTaskToArr(name, description, dueDate, priority, index) {
   const task = new Task(name, description, dueDate, priority);
   tasksArr[index].push(task);
+  saveProjects();
 }
 
 export function showProject(index) {
@@ -75,6 +89,7 @@ export function createTask(index) {
     deleteTask.addEventListener("click", () => {
       const taskIndex = tasksArr[index].indexOf(task);
       tasksArr[index].splice(taskIndex, 1);
+      saveProjects();
       createTask(index);
     });
 
@@ -93,6 +108,7 @@ export function createTask(index) {
       priority.value = tasksArr[index][taskIndex].priority;
 
       editTaskModal.showModal();
+      saveProjects();
     });
 
     taskRow.appendChild(imageSection);
@@ -129,9 +145,10 @@ submitTask.addEventListener("click", (event) => {
   if (name === "" || description === "" || dueDate === "") {
     taskError.textContent = "Please ensure all fields are filled";
   } else {
-    addTaskToArr(name, description, formatDueDate, priority, currentProjectIndex);
+    addTaskToArr(name, description, dueDate, priority, currentProjectIndex);
     addTaskModal.close();
     createTask(currentProjectIndex);
+    saveProjects();
   }
 });
 
@@ -150,6 +167,7 @@ editTaskSubmit.addEventListener("click", (event) => {
     addTaskToArr(name, description, dueDate, priority, currentProjectIndex);
     editTaskModal.close();
     createTask(currentProjectIndex);
+    saveProjects();
   }
 });
 
@@ -159,6 +177,10 @@ editTaskCancel.addEventListener("click", (event) => {
   editTaskModal.close();
 });
 
-addTaskToArr("This is a magnificent title", "This is a description that I am filling with empty space", "2067-07-06", "High", 0);
-addTaskToArr("This is a glorious title", "hello this is empty space lol", "2026-05-02", "Low", 0);
-addTaskToArr("This is once again empty space", "imagine reading this would never be me 💀💀💀", "2026-11-23", "goodbye", 1);
+loadProjects();
+
+if (tasksArr.length === 0) {
+  addTaskToArr("This is a magnificent title", "This is a description that I am filling with empty space", "2067-07-06", "High", 0);
+  addTaskToArr("This is a glorious title", "hello this is empty space lol", "2026-05-02", "Low", 0);
+  addTaskToArr("This is once again empty space", "imagine reading this would never be me 💀💀💀", "2026-11-23", "goodbye", 1);
+}
