@@ -2,7 +2,7 @@ import { projectsArr } from "./sidebar";
 import bin from "./bin.png";
 import edit from "./edit.png"
 
-export let tasksArr = [[], [], [], [], []];
+let tasksArr = [[], [], [], [], []];
 let currentProjectIndex = 0;
 let currentTaskIndex;
 
@@ -27,7 +27,8 @@ function loadProjects() {
   if (stored) {
     tasksArr = JSON.parse(stored);
   } else {
-    tasksArr = [];
+    tasksArr = [[], [], [], [], []];
+    saveProjects();
   }
 }
 
@@ -36,6 +37,10 @@ function saveProjects() {
 }
 
 function addTaskToArr(name, description, dueDate, priority, index) {
+  if (!tasksArr[index]) {
+    tasksArr[index] = [];
+  }
+
   const task = new Task(name, description, dueDate, priority);
   tasksArr[index].push(task);
   saveProjects();
