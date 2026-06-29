@@ -1,6 +1,6 @@
 import { projectsArr } from "./sidebar";
 import bin from "./bin.png";
-import edit from "./edit.png"
+import edit from "./edit.png";
 
 let tasksArr = [[], [], [], [], []];
 let currentProjectIndex = 0;
