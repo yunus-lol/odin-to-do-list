@@ -195,8 +195,8 @@ input:focus {
   height: 0.1em;
   width: 0.1em;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .add-task:hover {

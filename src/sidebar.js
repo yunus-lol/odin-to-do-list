@@ -1,33 +1,72 @@
 import bin from "./bin.png";
-import { showProject } from "./to-dos";
+import { createTask } from "./to-dos.js";
 
 const projectsSection = document.querySelector(".projects-section");
 export let projectsArr = [];
+let currentProjectIndex = 0;
 
 class Project {
-  constructor(name) {
+  constructor(title) {
+    this.name = title;
+    this.tasks = [];
+  }
+}
+
+class Task {
+  constructor(name, description, dueDate, priority) {
     this.name = name;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;
   }
 }
 
-function loadProjects() {
-  const stored = localStorage.getItem("projectsObj");
-  if (stored) {
-    projectsArr = JSON.parse(stored);
-  } else {
-    projectsArr = [];
-  }
-}
+// function loadProjects() {
+//   const stored = localStorage.getItem("projectsObj");
+//   if (stored) {
+//     projectsArr = JSON.parse(stored);
+//   } else {
+//     projectsArr = [];
+//   }
+// }
 
-function saveProjects() {
-  localStorage.setItem("projectsObj", JSON.stringify(projectsArr));
-}
+// function saveProjects() {
+//   localStorage.setItem("projectsObj", JSON.stringify(projectsArr));
+// }
 
-export function addProjectToArray(name) {
-  const project = new Project(name);
+export function addProjectToArray(title) {
+  const project = new Project(title);
   projectsArr.push(project);
-  saveProjects();
+//  saveProjects();
   displayProjects();
+}
+
+export function addTaskToArr(name, description, dueDate, priority, index) {
+  const task = new Task(name, description, dueDate, priority);
+  projectsArr[index].tasks.push(task);
+  // saveProjects();
+}
+
+const addTaskBtn = document.createElement("button");
+addTaskBtn.textContent = "+";
+addTaskBtn.classList.add("add-task");
+const addTaskModal = document.querySelector(".add-task-modal");
+
+const projectTitle = document.createElement("h3");
+projectTitle.classList.add("projectTitle");
+
+addTaskBtn.addEventListener("click", () => addTaskModal.showModal());
+
+export function showProject(index) {
+  currentProjectIndex = index;
+  const mainTitle = document.querySelector(".main-title");
+
+  projectTitle.textContent = "";
+  projectTitle.textContent = projectsArr[currentProjectIndex].name;
+
+  mainTitle.appendChild(projectTitle)
+  mainTitle.appendChild(addTaskBtn);
+  createTask(index);
 }
 
 function displayProjects() {
@@ -46,12 +85,12 @@ function displayProjects() {
 
     const index = projectsArr.indexOf(project);
     projectItem.addEventListener("click", () => {
-      showProject(index)
+      showProject(index);
     });
 
     image.addEventListener("click", () => {
       projectsArr.splice(index, 1);
-      saveProjects();
+      // saveProjects();
       displayProjects();
     });
 
@@ -61,7 +100,7 @@ function displayProjects() {
   });
 }
 
-loadProjects();
+// loadProjects();
 
 if (projectsArr.length === 0) {
   addProjectToArray("Default");
@@ -69,3 +108,7 @@ if (projectsArr.length === 0) {
 } else {
   displayProjects();
 }
+
+addTaskToArr("This is a magnificent title", "This is a description that I am filling with empty space", "2067-07-06", "High", 0);
+addTaskToArr("This is a glorious title", "hello this is empty space lol", "2026-05-02", "Low", 0);
+addTaskToArr("This is once again empty space", "imagine reading this would never be me 💀💀💀", "2026-11-23", "goodbye", 1);

@@ -1,74 +1,21 @@
-import { projectsArr } from "./sidebar";
 import bin from "./bin.png";
 import edit from "./edit.png";
+import { projectsArr, addTaskToArr } from "./sidebar";
 
-let tasksArr = [[], [], [], [], []];
-let currentProjectIndex = 0;
-let currentTaskIndex;
-
-const mainTitle = document.querySelector(".main-title");
 const tasksSection = document.querySelector(".tasks-section");
-
-const addTaskBtn = document.createElement("button");
-addTaskBtn.textContent = "+";
-addTaskBtn.classList.add("add-task");
-
-class Task {
-  constructor(name, description, dueDate, priority) {
-    this.name = name;
-    this.description = description;
-    this.dueDate = dueDate;
-    this.priority = priority;
-  }
-}
-
-function loadProjects() {
-  const stored = localStorage.getItem("tasksObj");
-  if (stored) {
-    tasksArr = JSON.parse(stored);
-  } else {
-    tasksArr = [[], [], [], [], []];
-    saveProjects();
-  }
-}
-
-function saveProjects() {
-  localStorage.setItem("tasksObj", JSON.stringify(tasksArr));
-}
-
-function hasAnyTasks() {
-  return tasksArr.some(task => task.length > 0);
-}
-
-function addTaskToArr(name, description, dueDate, priority, index) {
-  if (!tasksArr[index]) {
-    tasksArr[index] = [];
-  }
-
-  const task = new Task(name, description, dueDate, priority);
-  tasksArr[index].push(task);
-  saveProjects();
-}
-
-export function showProject(index) {
-  currentProjectIndex = index;
-
-  mainTitle.textContent = "";
-  mainTitle.textContent = projectsArr[index].name;
-  mainTitle.appendChild(addTaskBtn);
-
-  createTask(index);
-}
-
 const editTaskModal = document.querySelector(".edit-task-modal");
 const editTaskSubmit = document.querySelector(".edit-task-submit");
 const editTaskCancel = document.querySelector(".edit-task-cancel");
 const editTaskError = document.querySelector(".edit-task-error");
 
-export function createTask(index) {
-  tasksSection.textContent = "";
+let currentProjectIndex = 0;
+let currentTaskIndex = 0;
 
-  tasksArr[index].forEach(task => {
+export function createTask(projectIndex) {
+  tasksSection.textContent = "";
+  currentProjectIndex = projectIndex;
+
+  projectsArr[projectIndex].tasks.forEach((task, taskIndex) => {
     const card = document.createElement("div");
     card.classList.add("task");
 
@@ -84,7 +31,6 @@ export function createTask(index) {
     `;
 
     const taskRow = card.querySelector(".task-row");
-
     const imageSection = document.createElement("div");
     const deleteTask = document.createElement("img");
     const editTask = document.createElement("img");
@@ -92,14 +38,12 @@ export function createTask(index) {
     editTask.src = edit;
     deleteTask.src = bin;
 
-    editTask.classList.add("edit-task")
+    editTask.classList.add("edit-task");
     deleteTask.classList.add("delete-task");
 
     deleteTask.addEventListener("click", () => {
-      const taskIndex = tasksArr[index].indexOf(task);
-      tasksArr[index].splice(taskIndex, 1);
-      saveProjects();
-      createTask(index);
+      projectsArr[projectIndex].tasks.splice(taskIndex, 1);
+      createTask(projectIndex);
     });
 
     editTask.addEventListener("click", () => {
@@ -108,16 +52,14 @@ export function createTask(index) {
       const dueDate = document.querySelector("#edit-dueDate");
       const priority = document.querySelector("#edit-priority");
 
-      const taskIndex = tasksArr[index].indexOf(task);
-      currentTaskIndex = taskIndex
+      currentTaskIndex = taskIndex;
 
-      name.value = tasksArr[index][taskIndex].name;
-      description.value = tasksArr[index][taskIndex].description;
-      dueDate.value = tasksArr[index][taskIndex].dueDate;
-      priority.value = tasksArr[index][taskIndex].priority;
+      name.value = projectsArr[projectIndex].tasks[taskIndex].name;
+      description.value = projectsArr[projectIndex].tasks[taskIndex].description;
+      dueDate.value = projectsArr[projectIndex].tasks[taskIndex].dueDate;
+      priority.value = projectsArr[projectIndex].tasks[taskIndex].priority;
 
       editTaskModal.showModal();
-      saveProjects();
     });
 
     taskRow.appendChild(imageSection);
@@ -131,10 +73,6 @@ const addTaskModal = document.querySelector(".add-task-modal");
 const submitTask = document.querySelector(".task-submit");
 const cancelTask = document.querySelector(".task-cancel");
 const taskError = document.querySelector(".task-error");
-
-addTaskBtn.addEventListener("click", () => {
-  addTaskModal.showModal();
-});
 
 cancelTask.addEventListener("click", (event) => {
   event.preventDefault();
@@ -157,7 +95,6 @@ submitTask.addEventListener("click", (event) => {
     addTaskToArr(name, description, dueDate, priority, currentProjectIndex);
     addTaskModal.close();
     createTask(currentProjectIndex);
-    saveProjects();
   }
 });
 
@@ -172,11 +109,14 @@ editTaskSubmit.addEventListener("click", (event) => {
   if (name === "" || description === "" || dueDate === "") {
     editTaskError.textContent = "Please ensure all fields are filled";
   } else {
-    tasksArr[currentProjectIndex].splice(currentTaskIndex, 1);
-    addTaskToArr(name, description, dueDate, priority, currentProjectIndex);
+    let current = projectsArr[currentProjectIndex].tasks[currentTaskIndex];
+    current.name = name;
+    current.description = description;
+    current.dueDate = dueDate;
+    current.priority = priority;
+    
     editTaskModal.close();
     createTask(currentProjectIndex);
-    saveProjects();
   }
 });
 
@@ -185,11 +125,3 @@ editTaskCancel.addEventListener("click", (event) => {
   editTaskError.textContent = "";
   editTaskModal.close();
 });
-
-loadProjects();
-
-if (!hasAnyTasks()) {
-  addTaskToArr("This is a magnificent title", "This is a description that I am filling with empty space", "2067-07-06", "High", 0);
-  addTaskToArr("This is a glorious title", "hello this is empty space lol", "2026-05-02", "Low", 0);
-  addTaskToArr("This is once again empty space", "imagine reading this would never be me 💀💀💀", "2026-11-23", "goodbye", 1);
-}
