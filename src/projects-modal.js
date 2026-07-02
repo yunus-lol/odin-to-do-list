@@ -9,7 +9,7 @@ const declineButton = document.querySelector(".decline-close");
 
 export function generateModalContent() {
   addProject.addEventListener("click", () => {
-    if (projectsArr.length === 5) {
+    if (projectsArr.length === 15) {
       decline.showModal();
       declineButton.addEventListener("click", () => {
         decline.close();
