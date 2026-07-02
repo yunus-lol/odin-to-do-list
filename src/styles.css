@@ -164,6 +164,12 @@ input:focus {
   font-size: 1.15em;
 }
 
+.empty-message {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
 .task-row {
   display: flex;
   justify-content: space-between;
