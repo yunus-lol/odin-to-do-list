@@ -11,6 +11,7 @@ const emptyMessage = tasksSection.querySelector(".empty-message")
 
 let currentProjectIndex = 0;
 let currentTaskIndex = 0;
+let draggedIndex = null;
 
 export function createTask(projectIndex) {
   tasksSection.querySelectorAll(".task").forEach(task => task.remove());
@@ -21,6 +22,7 @@ export function createTask(projectIndex) {
     projectsArr[projectIndex].tasks.forEach((task, taskIndex) => {
       const card = document.createElement("div");
       card.classList.add("task");
+      card.draggable = true;
 
       card.innerHTML = `
         <div class="task-row">
@@ -64,6 +66,16 @@ export function createTask(projectIndex) {
         priority.value = projectsArr[projectIndex].tasks[taskIndex].priority;
 
         editTaskModal.showModal();
+      });
+
+      card.addEventListener("dragstart", () => draggedIndex = taskIndex);
+      card.addEventListener("dragover", (event) => event.preventDefault());
+      card.addEventListener("drop", () => {
+        const draggedItem = projectsArr[currentProjectIndex].tasks[draggedIndex];
+        projectsArr[currentProjectIndex].tasks.splice(draggedIndex, 1);
+        projectsArr[currentProjectIndex].tasks.splice(taskIndex, 0, draggedItem);
+        saveProjects();
+        createTask(currentProjectIndex);
       });
 
       taskRow.appendChild(imageSection);
