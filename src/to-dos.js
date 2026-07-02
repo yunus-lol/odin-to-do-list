@@ -106,8 +106,10 @@ submitTask.addEventListener("click", (event) => {
   const dueDate = document.querySelector("#dueDate").value;
   const priority = document.querySelector("#priority").value;
 
-  if (name === "" || description === "" || dueDate === "") {
+  if (name === "" || description === "" || dueDate === "" || priority === "Priority") {
     taskError.textContent = "Please ensure all fields are filled";
+  } else if (dueDate.length !== 10) {
+    taskError.textContent = "Please ensure date is in the format DD/MM/YYYY (or MM/DD/YYYY)";
   } else {
     addTaskToArr(name, description, dueDate, priority, currentProjectIndex);
     addTaskModal.close();
@@ -124,8 +126,10 @@ editTaskSubmit.addEventListener("click", (event) => {
   const dueDate = document.querySelector("#edit-dueDate").value;
   const priority = document.querySelector("#edit-priority").value;
 
-  if (name === "" || description === "" || dueDate === "") {
+  if (name === "" || description === "" || dueDate === "" || priority === "Priority") {
     editTaskError.textContent = "Please ensure all fields are filled";
+  } else if (dueDate.length !== 10) {
+    editTaskError.textContent = "Please ensure date is in the format DD/MM/YYYY (or MM/DD/YYYY)";
   } else {
     let current = projectsArr[currentProjectIndex].tasks[currentTaskIndex];
     current.name = name;

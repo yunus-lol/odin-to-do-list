@@ -15,8 +15,7 @@
       <button class="addProject">Add Project</button>
       <dialog class="addProjectModal">
         <form>
-          <label for="name">Add a new Project: </label>
-          <input type="text" id="name" name="name" placeholder="Project Title">
+          <input type="text" id="name" name="name" placeholder="Project Title...">
           <button type="submit" class="modal-submit">Add Project</button>
           <div class="error"></div>
         </form>
@@ -32,40 +31,38 @@
     <div class="main">
       <dialog class="add-task-modal">
         <form class="add-task-modal-form">
-          <label for="title">Title</label>
-          <input type="text" id="title" name="title" placeholder="Task Title">
-          <label for="description">Description</label>
-          <textarea type="textarea" id="description" name="description" placeholder="Task Description" rows="6" maxlength="300"></textarea>
-          <label for="dueDate">Due</label>
-          <input type="date" id="dueDate" name="dueDate">
-          <label for="priority">Priority</label>
+          <input type="text" id="title" name="title" placeholder="Title...">
+          <textarea type="textarea" id="description" name="description" placeholder="Description..." rows="6" maxlength="300"></textarea>
+          <input type="text" id="dueDate" name="dueDate" placeholder="Due Date..." oninput="formatDate(this)">
           <select name="priority" id="priority">
+            <option value="Priority">Priority</option>
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
             <option value="High">High</option>
           </select>
-          <button type="submit" class="task-submit">Add Task</button>
-          <button class="task-cancel">Cancel</button>
           <div class="task-error"></div>
+          <div class="buttons">
+            <button type="submit" class="task-submit">Add Task</button>
+            <button class="task-cancel">Cancel</button>
+          </div>
         </form>
       </dialog>
       <dialog class="edit-task-modal">
         <form class="edit-task-modal-form">
-          <label for="edit-title">Title</label>
           <input type="text" id="edit-title" name="edit-title" placeholder="Task Title">
-          <label for="edit-description">Description</label>
           <textarea type="textarea" id="edit-description" name="edit-description" placeholder="Task Description" rows="6" maxlength="300"></textarea>
-          <label for="edit-dueDate">Due</label>
-          <input type="date" id="edit-dueDate" name="edit-dueDate">
-          <label for="edit-priority">Priority</label>
+          <input type="text" id="edit-dueDate" name="edit-dueDate" placeholder="Due Date..." oninput="formatDate(this)">
           <select name="edit-priority" id="edit-priority">
+            <option value="Priority">Priority</option>
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
             <option value="High">High</option>
           </select>
-          <button type="submit" class="edit-task-submit">Edit Task</button>
-          <button class="edit-task-cancel">Cancel</button>
           <div class="edit-task-error"></div>
+          <div class="buttons">
+            <button type="submit" class="edit-task-submit">Edit Task</button>
+            <button class="edit-task-cancel">Cancel</button>
+          </div>
         </form>
       </dialog>
       <div class="main-title"></div>
@@ -74,5 +71,19 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function formatDate(input) {
+      let value = input.value.replace(/\D/g, '');
+      
+      if (value.length > 2 && value.length <= 4) {
+        value = value.slice(0, 2) + '/' + value.slice(2);
+      } else if (value.length > 4) {
+        value = value.slice(0, 2) + '/' + value.slice(2, 4) + '/' + value.slice(4, 8);
+      }
+      
+      input.value = value;
+    }
+  </script>
 </body>
 </html>

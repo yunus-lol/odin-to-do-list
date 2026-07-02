@@ -55,7 +55,13 @@ const addTaskModal = document.querySelector(".add-task-modal");
 const projectTitle = document.createElement("h3");
 projectTitle.classList.add("projectTitle");
 
-addTaskBtn.addEventListener("click", () => addTaskModal.showModal());
+addTaskBtn.addEventListener("click", () => {
+  document.querySelector("#title").value = "";
+  document.querySelector("#description").value = "";
+  document.querySelector("#dueDate").value = "";
+  document.querySelector("#priority").value = "Priority";
+  addTaskModal.showModal()
+});
 
 export function showProject(index) {
   currentProjectIndex = index;

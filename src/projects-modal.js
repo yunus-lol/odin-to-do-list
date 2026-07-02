@@ -15,6 +15,7 @@ export function generateModalContent() {
         decline.close();
       });
     } else {
+      document.querySelector("#name").value = "";
       modal.showModal();
     }
   });
