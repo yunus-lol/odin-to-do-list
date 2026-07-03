@@ -82,12 +82,16 @@ button:hover {
   height: 60px;
 }
 
+.projectItem.active {
+  background-color: rgb(50, 50, 50);
+}
+
 .task-error, .edit-task-error {
   color: red;
   font-weight: bold;
 }
 
-.addProjectModal, .decline, .add-task-modal, .edit-task-modal {
+.decline, .add-task-modal, .edit-task-modal {
   background-color: rgb(45, 45, 45);
   padding: 1em;
   color: white;
@@ -99,10 +103,24 @@ button:hover {
   height: 90vh;
 }
 
+.addProjectModal {
+  background-color: rgb(45, 45, 45);
+  padding: 1em;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  align-self: center;
+  justify-self: center;
+  width: 55vw;
+}
+
+.modal-submit {
+  width: 100%;
+}
+
 form {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-evenly;
 }
 
@@ -121,6 +139,11 @@ form > * {
   font-size: 1.5em;
   color: white;
   width: 83vw;
+}
+
+#name {
+  width: 40vw;
+  margin-top: 1em;
 }
 
 #description:focus, #edit-description:focus {
@@ -202,10 +225,8 @@ input:focus {
 
 .task-row-two {
   display: flex;
-}
-
-.task-priority {
-  margin-right: 1em;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .task-title {
@@ -243,4 +264,23 @@ input:focus {
   background-color: rgb(32, 32, 32);
   height: 1em;
   margin: 10px;
+}
+
+.low, .medium, .high {
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.low {
+  background-color: green;
+}
+
+.medium {
+  background-color: rgb(190, 190, 0);
+}
+
+.high {
+  background-color: red;
 }

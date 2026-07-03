@@ -79,6 +79,10 @@ export function showProject(index) {
   createTask(index);
 }
 
+export function handleText(text, limit) {
+  return text.length > limit ? text.slice(0, limit) + "..." : text;
+}
+
 function displayProjects() {
   projectsSection.innerHTML = "";
   projectsArr.forEach((project, index) => {
@@ -86,15 +90,20 @@ function displayProjects() {
     const projectItem = document.createElement("button");
     const image = document.createElement("img");
 
+    if (index === currentProjectIndex) {
+      projectItem.classList.add("active");
+    }
+
     projectItem.classList.add("projectItem");
     projectArea.classList.add("project-area");
     image.classList.add("delete-icon");
 
-    projectItem.textContent = project.name;
+    projectItem.textContent = handleText(project.name, 15);
     image.src = bin;
 
     projectItem.addEventListener("click", () => {
       showProject(index);
+      displayProjects();
     });
 
     image.addEventListener("click", () => {
@@ -106,7 +115,9 @@ function displayProjects() {
       if (projectsArr.length === 0) {
         showError();
       } else {
-        showProject(0)
+        currentProjectIndex = Math.min(currentProjectIndex, projectsArr.length - 1);
+        displayProjects();
+        showProject(currentProjectIndex);
       }
     });
 
@@ -132,5 +143,7 @@ loadProjects();
 if (projectsArr.length === 0) {
   showError();
 } else {
+  currentProjectIndex = 0;
   displayProjects();
+  showProject(currentProjectIndex);
 }

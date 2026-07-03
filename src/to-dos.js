@@ -1,6 +1,6 @@
 import bin from "./bin.png";
 import edit from "./edit.png";
-import { projectsArr, addTaskToArr, saveProjects } from "./sidebar";
+import { projectsArr, addTaskToArr, saveProjects, handleText } from "./sidebar";
 
 const tasksSection = document.querySelector(".tasks-section");
 const editTaskModal = document.querySelector(".edit-task-modal");
@@ -26,14 +26,23 @@ export function createTask(projectIndex) {
 
       card.innerHTML = `
         <div class="task-row">
-          <h3 class="task-title">${task.name}</h3>
+          <h3 class="task-title">${handleText(task.name, 40)}</h3>
         </div>
         <div class="task-row-two">
-          <div class="task-priority">Priority: ${task.priority}</div>
           <div class="task-dueDate">Due: ${task.dueDate}</div>
+          <div class="task-priority">${task.priority}</div>
         </div>
-        <div class="task-description">${task.description}</div>
+        <div class="task-description">${handleText(task.description, 50)}</div>
       `;
+
+      const priorityElement = card.querySelector(".task-priority");
+      if (task.priority === "Low") {
+        priorityElement.classList.add("low");
+      } else if (task.priority === "Medium") {
+        priorityElement.classList.add("medium");
+      } else {
+        priorityElement.classList.add("high");
+      }
 
       const taskRow = card.querySelector(".task-row");
       const imageSection = document.createElement("div");
