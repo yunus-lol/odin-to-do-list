@@ -72,6 +72,13 @@ button:hover {
   width: 90%;
 }
 
+.projectTitle {
+  border: none;
+  background-color: #282828;
+  font-size: 1.2em;
+  width: 50vw;
+}
+
 .projects-section {
   display: flex;
   flex-direction: column;

@@ -52,8 +52,14 @@ addTaskBtn.textContent = "+";
 addTaskBtn.classList.add("add-task");
 const addTaskModal = document.querySelector(".add-task-modal");
 
-const projectTitle = document.createElement("h3");
+const projectTitle = document.createElement("input");
 projectTitle.classList.add("projectTitle");
+
+projectTitle.addEventListener("change", () => {
+  projectsArr[currentProjectIndex].name = projectTitle.value;
+  saveProjects();
+  displayProjects();
+});
 
 addTaskBtn.addEventListener("click", () => {
   document.querySelector("#title").value = "";
@@ -73,7 +79,7 @@ export function showProject(index) {
     return;
   }
 
-  projectTitle.textContent = projectsArr[currentProjectIndex].name;
+  projectTitle.value = projectsArr[currentProjectIndex].name;
   mainTitle.appendChild(projectTitle)
   mainTitle.appendChild(addTaskBtn);
   createTask(index);
@@ -98,7 +104,7 @@ function displayProjects() {
     projectArea.classList.add("project-area");
     image.classList.add("delete-icon");
 
-    projectItem.textContent = handleText(project.name, 15);
+    projectItem.textContent = handleText(project.name, 20);
     image.src = bin;
 
     projectItem.addEventListener("click", () => {

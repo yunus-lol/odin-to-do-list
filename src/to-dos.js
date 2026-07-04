@@ -1,5 +1,4 @@
 import bin from "./bin.png";
-import edit from "./edit.png";
 import { projectsArr, addTaskToArr, saveProjects, handleText } from "./sidebar";
 
 const tasksSection = document.querySelector(".tasks-section");
@@ -47,21 +46,18 @@ export function createTask(projectIndex) {
       const taskRow = card.querySelector(".task-row");
       const imageSection = document.createElement("div");
       const deleteTask = document.createElement("img");
-      const editTask = document.createElement("img");
 
-      editTask.src = edit;
       deleteTask.src = bin;
-
-      editTask.classList.add("edit-task");
       deleteTask.classList.add("delete-task");
 
-      deleteTask.addEventListener("click", () => {
+      deleteTask.addEventListener("click", (event) => {
+        event.stopPropagation();
         projectsArr[projectIndex].tasks.splice(taskIndex, 1);
         createTask(projectIndex);
         saveProjects();
       });
 
-      editTask.addEventListener("click", () => {
+      card.addEventListener("click", () => {
         const name = document.querySelector("#edit-title");
         const description = document.querySelector("#edit-description");
         const dueDate = document.querySelector("#edit-dueDate");
@@ -88,7 +84,6 @@ export function createTask(projectIndex) {
       });
 
       taskRow.appendChild(imageSection);
-      imageSection.appendChild(editTask);
       imageSection.appendChild(deleteTask);
       tasksSection.appendChild(card);
     });
