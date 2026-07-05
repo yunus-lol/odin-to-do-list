@@ -9,8 +9,10 @@ Original Deployment:
 
 Version 1.1 Deployment:
 * User friendly interface
-* Clearer, easier to edit both project names and tasks
+* Easier to edit both project names and tasks
 * Fixed several design bugs
 * Increased project cap (5 to 15)
+* Ability to drag and drop tasks within a project
 * Improved memory usage in `localStorage`
 * Features of Responsive Web Design
+* Clearer priority labels and task readability
